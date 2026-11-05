@@ -13,7 +13,7 @@ import {
 
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import './App.css';
+import './app.css';
 
 const materials = [
   'All materials', 'Plastic', 'Paper', 'Glass', 'Metal',
