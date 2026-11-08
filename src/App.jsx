@@ -1,6 +1,9 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { supabase } from './lib/supabase';
+import EcoReport from './EcoReport';
+import AdminDashboard from './AdminDashboard';
+
 import {
   Recycle, Search, MapPin, Plus, CheckCircle2,
   Clock3, ShieldCheck, X, Navigation, Leaf,
@@ -263,8 +266,8 @@ function MapFocus({ point }) {
   const map = useMap();
 
   useEffect(() => {
-    if (point?.lat != null && point?.lng != null) {
-      map.flyTo([Number(point.lat), Number(point.lng)], 14);
+    if (point?.lat != null && point?.long != null) {
+      map.flyTo([Number(point.lat), Number(point.long)], 14);
     }
   }, [point, map]);
 
@@ -273,6 +276,8 @@ function MapFocus({ point }) {
 
 export default function App() {
   const [language, setLanguage] = useState('en');
+  const [currentPage, setCurrentPage] = useState('ecofind');
+
   const t = translations[language];
   const isArabic = language === 'ar';
 
@@ -299,6 +304,12 @@ export default function App() {
   async function loadPoints() {
     setLoading(true);
     setError('');
+
+    if (!supabase) {
+      setError('Database connection unavailable. Check your Supabase environment variables.');
+      setLoading(false);
+      return;
+    }
 
     const { data, error } = await supabase
       .from('recycling_points')
@@ -342,8 +353,32 @@ export default function App() {
   const active =
     results.find(p => p.id === selected) || results[0];
 
+  // ECOREPORT page
+  if (currentPage === 'ecoreport') {
+    return (
+      <EcoReport
+        onBack={() => setCurrentPage('ecofind')}
+      />
+    );
+  }
+
+  // ECOGUARD ADMIN DASHBOARD
+  if (currentPage === 'admin') {
+    return (
+      <AdminDashboard
+        onBack={() => setCurrentPage('ecofind')}
+      />
+    );
+  }
+
   async function submit(e) {
     e.preventDefault();
+
+    if (!supabase) {
+      setMessage('Database connection unavailable.');
+      return;
+    }
+
     setSubmitting(true);
     setMessage('');
 
@@ -389,6 +424,26 @@ export default function App() {
           <a href="#locations">{t.find}</a>
           <a href="#how">{t.how}</a>
           <a href="#trust">{t.verification}</a>
+
+          <a
+            href="#report"
+            onClick={e => {
+              e.preventDefault();
+              setCurrentPage('ecoreport');
+            }}
+          >
+            Report an issue
+          </a>
+
+          <a
+            href="#admin"
+            onClick={e => {
+              e.preventDefault();
+              setCurrentPage('admin');
+            }}
+          >
+            Admin
+          </a>
         </nav>
 
         <div className="header-actions">
@@ -520,11 +575,11 @@ export default function App() {
                   <MapFocus point={active}/>
 
                   {results.filter(p =>
-                    p.lat != null && p.lng != null
+                    p.lat != null && p.long != null
                   ).map(p => (
                     <Marker
                       key={p.id}
-                      position={[Number(p.lat), Number(p.lng)]}
+                      position={[Number(p.lat), Number(p.long)]}
                       icon={marker}
                       eventHandlers={{
                         click: () => setSelected(p.id)
