@@ -1,50 +1,19 @@
-
 import { useEffect, useMemo, useState } from 'react';
 import { supabase } from './lib/supabase';
 
 import {
-  ShieldCheck,
-  LogOut,
-  RefreshCw,
-  Search,
-  MapPin,
-  Clock,
-  CheckCircle2,
-  AlertTriangle,
-  FileText,
-  X,
-  LayoutDashboard,
-  ClipboardList,
-  ChevronRight,
-  Menu,
-  CalendarDays,
-  Eye,
-  Activity,
-  ArrowUpRight,
-  Filter,
-  Leaf,
-  ExternalLink
+  ShieldCheck, LogOut, RefreshCw, Search, MapPin, Clock,
+  CheckCircle2, AlertTriangle, FileText, X, LayoutDashboard,
+  ClipboardList, ChevronRight, Menu, CalendarDays, Eye,
+  Activity, ArrowUpRight, Filter, Leaf, ExternalLink, ArrowLeft
 } from 'lucide-react';
 
 import './admindashboard.css';
 
 const statuses = [
-  'pending',
-  'under_review',
-  'verified',
-  'in_progress',
-  'resolved',
-  'rejected'
+  'pending', 'under_review', 'verified',
+  'in_progress', 'resolved', 'rejected'
 ];
-
-const statusLabels = {
-  pending: 'Pending',
-  under_review: 'Under review',
-  verified: 'Verified',
-  in_progress: 'In progress',
-  resolved: 'Resolved',
-  rejected: 'Rejected'
-};
 
 const categories = [
   'Illegal dumping',
@@ -55,35 +24,281 @@ const categories = [
   'Other'
 ];
 
-function formatDate(date) {
-  if (!date) return 'Date unavailable';
+const translations = {
+  en: {
+    back: 'Back to ECOFIND',
+    language: 'العربية',
+    loadingAccess: 'Verifying secure administrator access...',
+    loginEyebrow: 'SECURE CONTROL CENTER',
+    welcome: 'Welcome back.',
+    loginDescription: 'Sign in to access the environmental monitoring administration panel.',
+    email: 'Email address',
+    password: 'Password',
+    passwordPlaceholder: 'Enter your password',
+    signIn: 'Signing in...',
+    access: 'Access dashboard',
+    protected: 'Protected by Supabase Authentication',
+    workspace: 'WORKSPACE',
+    overview: 'Overview',
+    reports: 'Environmental reports',
+    protect: 'Protecting our environment',
+    protectText: 'Every verified report contributes to a cleaner and safer community.',
+    authorized: 'Authorized account',
+    signOut: 'Sign out',
+    system: 'System active',
+    intelligence: 'ENVIRONMENTAL INTELLIGENCE',
+    dashboard: 'Dashboard overview',
+    dashboardText: 'Monitor community reports and track environmental activity across the platform.',
+    refresh: 'Refresh data',
+    total: 'Total reports',
+    totalCaption: 'All community submissions',
+    pending: 'Pending',
+    pendingReview: 'Pending review',
+    pendingCaption: 'Awaiting moderator review',
+    verified: 'Verified',
+    verifiedCaption: 'Confirmed environmental reports',
+    resolved: 'Resolved',
+    resolvedCaption: 'Successfully resolved reports',
+    today: 'Reports submitted today',
+    underReview: 'Under review',
+    inProgress: 'In progress',
+    attention: 'ATTENTION REQUIRED',
+    attentionTitle: 'Reports requiring attention',
+    attentionText: 'Recent submissions awaiting review.',
+    viewAll: 'View all',
+    loadingReports: 'Loading reports...',
+    caughtUp: 'All caught up',
+    noPending: 'There are no reports waiting for review.',
+    noLocation: 'Location not provided',
+    breakdown: 'REPORT BREAKDOWN',
+    statusOverview: 'Status overview',
+    distribution: 'Current report distribution.',
+    manage: 'Manage all reports',
+    latest: 'LATEST ACTIVITY',
+    recent: 'Recent submissions',
+    recentText: 'The latest reports submitted by the community.',
+    allReports: 'All reports',
+    loadingSubmissions: 'Loading submissions...',
+    noSubmissions: 'No submissions yet',
+    communityReports: 'Community reports will appear here.',
+    report: 'Report',
+    location: 'Location',
+    dateSubmitted: 'Date submitted',
+    notProvided: 'Not provided',
+    communityManagement: 'COMMUNITY MANAGEMENT',
+    reportTitle: 'Environmental reports',
+    reportDescription: 'Review submissions, verify environmental issues and update report progress.',
+    refreshShort: 'Refresh',
+    submissions: 'Total submissions',
+    allSubmissions: 'All submissions',
+    found: 'reports found',
+    searchPlaceholder: 'Search reports, descriptions or locations...',
+    allStatuses: 'All statuses',
+    allCategories: 'All categories',
+    loadingEnvironmental: 'Loading environmental reports...',
+    noReports: 'No reports found',
+    changeFilters: 'Try changing your filters or search terms.',
+    noDescription: 'No description provided.',
+    evidence: 'Evidence attached',
+    noEvidence: 'No evidence photo',
+    review: 'Review report',
+    footer: 'ECOGUARD Administration',
+    footerText: 'Environmental monitoring and community protection',
+    reviewEyebrow: 'REPORT REVIEW',
+    submitted: 'Submitted',
+    description: 'Description',
+    noAddress: 'No address provided.',
+    openLocation: 'Open report location',
+    photograph: 'Evidence photograph',
+    notes: 'Moderator notes',
+    notesDescription: 'Record findings, verification details or the reason for rejecting a submission.',
+    notesPlaceholder: 'Write your moderation notes here...',
+    updateStatus: 'Update report status',
+    statusDescription: 'Select the appropriate status for this report.',
+    saving: 'Saving changes...',
+    saveNotes: 'Save moderator notes',
+    updated: 'Report updated successfully.',
+    dateUnavailable: 'Date unavailable',
+    clearSearch: 'Clear search',
+    closeReport: 'Close report',
+    viewReport: 'View report',
+    status: {
+      pending: 'Pending',
+      under_review: 'Under review',
+      verified: 'Verified',
+      in_progress: 'In progress',
+      resolved: 'Resolved',
+      rejected: 'Rejected'
+    },
+    category: {
+      'Illegal dumping': 'Illegal dumping',
+      'Air pollution': 'Air pollution',
+      'Water pollution': 'Water pollution',
+      'Overflowing bins': 'Overflowing bins',
+      'Environmental damage': 'Environmental damage',
+      Other: 'Other'
+    },
+    role: {
+      admin: 'Administrator',
+      moderator: 'Moderator'
+    }
+  },
+
+  ar: {
+    back: 'العودة إلى ECOFIND',
+    language: 'English',
+    loadingAccess: 'جارٍ التحقق من صلاحيات الدخول...',
+    loginEyebrow: 'مركز التحكم الآمن',
+    welcome: 'مرحبًا بعودتك.',
+    loginDescription: 'سجّل الدخول للوصول إلى لوحة إدارة ومراقبة البيئة.',
+    email: 'البريد الإلكتروني',
+    password: 'كلمة المرور',
+    passwordPlaceholder: 'أدخل كلمة المرور',
+    signIn: 'جارٍ تسجيل الدخول...',
+    access: 'الدخول إلى لوحة الإدارة',
+    protected: 'محمي بواسطة نظام المصادقة Supabase',
+    workspace: 'مساحة العمل',
+    overview: 'نظرة عامة',
+    reports: 'التقارير البيئية',
+    protect: 'نحمي بيئتنا',
+    protectText: 'يساهم كل تقرير موثّق في بناء مجتمع أنظف وأكثر أمانًا.',
+    authorized: 'حساب مصرح له',
+    signOut: 'تسجيل الخروج',
+    system: 'النظام يعمل',
+    intelligence: 'المعلومات البيئية',
+    dashboard: 'نظرة عامة على لوحة التحكم',
+    dashboardText: 'تابع تقارير المجتمع وراقب النشاط البيئي عبر المنصة.',
+    refresh: 'تحديث البيانات',
+    total: 'إجمالي التقارير',
+    totalCaption: 'جميع مساهمات المجتمع',
+    pending: 'قيد الانتظار',
+    pendingReview: 'بانتظار المراجعة',
+    pendingCaption: 'في انتظار مراجعة المشرف',
+    verified: 'موثّق',
+    verifiedCaption: 'تقارير بيئية تم التأكد منها',
+    resolved: 'تم الحل',
+    resolvedCaption: 'تقارير تمت معالجتها بنجاح',
+    today: 'التقارير المرسلة اليوم',
+    underReview: 'قيد المراجعة',
+    inProgress: 'قيد المعالجة',
+    attention: 'يتطلب الانتباه',
+    attentionTitle: 'تقارير تتطلب المراجعة',
+    attentionText: 'أحدث البلاغات التي تنتظر المراجعة.',
+    viewAll: 'عرض الكل',
+    loadingReports: 'جارٍ تحميل التقارير...',
+    caughtUp: 'كل شيء محدّث',
+    noPending: 'لا توجد تقارير تنتظر المراجعة حاليًا.',
+    noLocation: 'لم يتم تحديد الموقع',
+    breakdown: 'توزيع التقارير',
+    statusOverview: 'نظرة عامة على الحالات',
+    distribution: 'التوزيع الحالي للتقارير.',
+    manage: 'إدارة جميع التقارير',
+    latest: 'أحدث النشاطات',
+    recent: 'أحدث البلاغات',
+    recentText: 'أحدث التقارير المرسلة من المجتمع.',
+    allReports: 'جميع التقارير',
+    loadingSubmissions: 'جارٍ تحميل البلاغات...',
+    noSubmissions: 'لا توجد بلاغات بعد',
+    communityReports: 'ستظهر تقارير المجتمع هنا.',
+    report: 'التقرير',
+    location: 'الموقع',
+    dateSubmitted: 'تاريخ الإرسال',
+    notProvided: 'غير محدد',
+    communityManagement: 'إدارة المجتمع',
+    reportTitle: 'التقارير البيئية',
+    reportDescription: 'راجع البلاغات وتحقق من المشكلات البيئية وحدّث حالة معالجتها.',
+    refreshShort: 'تحديث',
+    submissions: 'إجمالي البلاغات',
+    allSubmissions: 'جميع البلاغات',
+    found: 'تقرير تم العثور عليه',
+    searchPlaceholder: 'ابحث في التقارير أو الأوصاف أو المواقع...',
+    allStatuses: 'جميع الحالات',
+    allCategories: 'جميع التصنيفات',
+    loadingEnvironmental: 'جارٍ تحميل التقارير البيئية...',
+    noReports: 'لم يتم العثور على تقارير',
+    changeFilters: 'جرّب تغيير الفلاتر أو كلمات البحث.',
+    noDescription: 'لا يوجد وصف.',
+    evidence: 'صورة مرفقة',
+    noEvidence: 'لا توجد صورة إثبات',
+    review: 'مراجعة التقرير',
+    footer: 'إدارة ECOGUARD',
+    footerText: 'المراقبة البيئية وحماية المجتمع',
+    reviewEyebrow: 'مراجعة التقرير',
+    submitted: 'تاريخ الإرسال',
+    description: 'الوصف',
+    noAddress: 'لم يتم تقديم عنوان.',
+    openLocation: 'فتح موقع التقرير',
+    photograph: 'صورة الإثبات',
+    notes: 'ملاحظات المشرف',
+    notesDescription: 'سجّل النتائج أو تفاصيل التحقق أو سبب رفض البلاغ.',
+    notesPlaceholder: 'اكتب ملاحظات المراجعة هنا...',
+    updateStatus: 'تحديث حالة التقرير',
+    statusDescription: 'اختر الحالة المناسبة لهذا التقرير.',
+    saving: 'جارٍ حفظ التغييرات...',
+    saveNotes: 'حفظ ملاحظات المشرف',
+    updated: 'تم تحديث التقرير بنجاح.',
+    dateUnavailable: 'التاريخ غير متاح',
+    clearSearch: 'مسح البحث',
+    closeReport: 'إغلاق التقرير',
+    viewReport: 'عرض التقرير',
+    status: {
+      pending: 'قيد الانتظار',
+      under_review: 'قيد المراجعة',
+      verified: 'موثّق',
+      in_progress: 'قيد المعالجة',
+      resolved: 'تم الحل',
+      rejected: 'مرفوض'
+    },
+    category: {
+      'Illegal dumping': 'رمي النفايات عشوائيًا',
+      'Air pollution': 'تلوث الهواء',
+      'Water pollution': 'تلوث المياه',
+      'Overflowing bins': 'حاويات نفايات فائضة',
+      'Environmental damage': 'أضرار بيئية',
+      Other: 'أخرى'
+    },
+    role: {
+      admin: 'مدير النظام',
+      moderator: 'مشرف'
+    }
+  }
+};
+
+function formatDate(date, language) {
+  if (!date) return translations[language].dateUnavailable;
 
   const parsed = new Date(date);
 
   if (Number.isNaN(parsed.getTime())) {
-    return 'Date unavailable';
+    return translations[language].dateUnavailable;
   }
 
-  return parsed.toLocaleDateString(undefined, {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric'
-  });
+  return parsed.toLocaleDateString(
+    language === 'ar' ? 'ar-DZ' : 'en-GB',
+    { day: 'numeric', month: 'short', year: 'numeric' }
+  );
 }
 
-function formatDateTime(date) {
-  if (!date) return 'Date unavailable';
+function formatDateTime(date, language) {
+  if (!date) return translations[language].dateUnavailable;
 
   const parsed = new Date(date);
 
   if (Number.isNaN(parsed.getTime())) {
-    return 'Date unavailable';
+    return translations[language].dateUnavailable;
   }
 
-  return parsed.toLocaleString();
+  return parsed.toLocaleString(language === 'ar' ? 'ar-DZ' : 'en-GB');
 }
 
-export default function AdminDashboard({ onBack }) {
+export default function AdminDashboard({
+  onBack,
+  language = 'en',
+  onLanguageChange
+}) {
+  const isArabic = language === 'ar';
+  const t = translations[isArabic ? 'ar' : 'en'];
+
   const [user, setUser] = useState(null);
   const [profile, setProfile] = useState(null);
   const [checking, setChecking] = useState(true);
@@ -110,6 +325,10 @@ export default function AdminDashboard({ onBack }) {
   const [updatingId, setUpdatingId] = useState(null);
   const [actionMessage, setActionMessage] = useState('');
   const [actionError, setActionError] = useState(false);
+
+  const statusLabel = status => t.status[status] || status;
+  const categoryLabel = category => t.category[category] || category;
+  const roleLabel = role => t.role[role] || role;
 
   useEffect(() => {
     checkSession();
@@ -154,7 +373,11 @@ export default function AdminDashboard({ onBack }) {
     }
 
     if (!data || !['admin', 'moderator'].includes(data.role)) {
-      setAccessError('Your account does not have moderator access.');
+      setAccessError(
+        isArabic
+          ? 'هذا الحساب لا يملك صلاحيات المشرف.'
+          : 'Your account does not have moderator access.'
+      );
       setProfile(null);
       return;
     }
@@ -248,13 +471,11 @@ export default function AdminDashboard({ onBack }) {
       setActionError(true);
     } else {
       setReports(previous =>
-        previous.map(item =>
-          item.id === report.id ? data : item
-        )
+        previous.map(item => item.id === report.id ? data : item)
       );
 
       setSelectedReport(data);
-      setActionMessage('Report updated successfully.');
+      setActionMessage(t.updated);
     }
 
     setUpdatingId(null);
@@ -266,8 +487,7 @@ export default function AdminDashboard({ onBack }) {
         filterStatus === 'all' || report.status === filterStatus;
 
       const matchesCategory =
-        filterCategory === 'all' ||
-        report.category === filterCategory;
+        filterCategory === 'all' || report.category === filterCategory;
 
       const searchText = search.toLowerCase().trim();
 
@@ -286,16 +506,12 @@ export default function AdminDashboard({ onBack }) {
   const todayReports = reports.filter(report => {
     if (!report.created_at) return false;
 
-    const date = new Date(report.created_at);
-    const today = new Date();
-
-    return date.toDateString() === today.toDateString();
+    return new Date(report.created_at).toDateString() ===
+      new Date().toDateString();
   }).length;
 
   const pendingReports = reports
-    .filter(report =>
-      ['pending', 'under_review'].includes(report.status)
-    )
+    .filter(report => ['pending', 'under_review'].includes(report.status))
     .slice(0, 5);
 
   const recentReports = reports.slice(0, 5);
@@ -311,37 +527,61 @@ export default function AdminDashboard({ onBack }) {
     setActionError(false);
   }
 
+  const BackButton = () => (
+    <button
+      type="button"
+      className="admin-back-button"
+      onClick={onBack}
+    >
+      <ArrowLeft size={17} />
+      <span>{t.back}</span>
+    </button>
+  );
+
+  const LanguageButton = () => (
+    onLanguageChange ? (
+      <button
+        type="button"
+        className="admin-language-button"
+        onClick={() => onLanguageChange(isArabic ? 'en' : 'ar')}
+      >
+        {t.language}
+      </button>
+    ) : null
+  );
+
   if (checking) {
     return (
-      <div className="admin-loading">
+      <div className={`admin-loading ${isArabic ? 'admin-rtl' : ''}`} dir={isArabic ? 'rtl' : 'ltr'} lang={language}>
+        <div className="admin-login-actions">
+          <BackButton />
+          <LanguageButton />
+        </div>
         <RefreshCw className="admin-spin" size={28} />
-        <p>Verifying secure administrator access...</p>
+        <p>{t.loadingAccess}</p>
       </div>
     );
   }
 
   if (!profile) {
     return (
-      <div className="admin-login-page">
+      <div className={`admin-login-page ${isArabic ? 'admin-rtl' : ''}`} dir={isArabic ? 'rtl' : 'ltr'} lang={language}>
+        <div className="admin-login-actions">
+          <BackButton />
+          <LanguageButton />
+        </div>
+
         <div className="admin-login-card">
           <div className="admin-login-brand">
             <div className="admin-logo">
               <ShieldCheck size={30} />
             </div>
-
             <span>ECOGUARD</span>
           </div>
 
-          <span className="admin-eyebrow">
-            SECURE CONTROL CENTER
-          </span>
-
-          <h1>Welcome back.</h1>
-
-          <p>
-            Sign in to access the environmental monitoring
-            administration panel.
-          </p>
+          <span className="admin-eyebrow">{t.loginEyebrow}</span>
+          <h1>{t.welcome}</h1>
+          <p>{t.loginDescription}</p>
 
           {accessError && (
             <div className="admin-error">
@@ -352,8 +592,7 @@ export default function AdminDashboard({ onBack }) {
 
           <form onSubmit={login}>
             <label>
-              Email address
-
+              {t.email}
               <input
                 type="email"
                 required
@@ -364,14 +603,13 @@ export default function AdminDashboard({ onBack }) {
             </label>
 
             <label>
-              Password
-
+              {t.password}
               <input
                 type="password"
                 required
                 value={password}
                 onChange={e => setPassword(e.target.value)}
-                placeholder="Enter your password"
+                placeholder={t.passwordPlaceholder}
               />
             </label>
 
@@ -387,14 +625,14 @@ export default function AdminDashboard({ onBack }) {
               className="admin-primary"
               disabled={loginLoading}
             >
-              {loginLoading ? 'Signing in...' : 'Access dashboard'}
+              {loginLoading ? t.signIn : t.access}
               {!loginLoading && <ChevronRight size={18} />}
             </button>
           </form>
 
           <div className="admin-login-footer">
             <ShieldCheck size={15} />
-            Protected by Supabase Authentication
+            {t.protected}
           </div>
         </div>
       </div>
@@ -402,10 +640,11 @@ export default function AdminDashboard({ onBack }) {
   }
 
   return (
-    <div className="admin-dashboard">
-
-      {/* MOBILE OVERLAY */}
-
+    <div
+      className={`admin-dashboard ${isArabic ? 'admin-rtl' : ''}`}
+      dir={isArabic ? 'rtl' : 'ltr'}
+      lang={language}
+    >
       {sidebarOpen && (
         <div
           className="admin-sidebar-overlay"
@@ -413,23 +652,18 @@ export default function AdminDashboard({ onBack }) {
         />
       )}
 
-      {/* SIDEBAR */}
-
       <aside className={`admin-sidebar ${sidebarOpen ? 'open' : ''}`}>
         <div className="admin-sidebar-brand">
           <div className="admin-logo">
             <ShieldCheck size={26} />
           </div>
-
           <div>
             <strong>ECOGUARD</strong>
             <span>ENVIRONMENTAL INTELLIGENCE</span>
           </div>
         </div>
 
-        <div className="admin-sidebar-label">
-          WORKSPACE
-        </div>
+        <div className="admin-sidebar-label">{t.workspace}</div>
 
         <nav className="admin-navigation">
           <button
@@ -437,7 +671,7 @@ export default function AdminDashboard({ onBack }) {
             onClick={() => navigate('overview')}
           >
             <LayoutDashboard size={19} />
-            <span>Overview</span>
+            <span>{t.overview}</span>
           </button>
 
           <button
@@ -445,12 +679,9 @@ export default function AdminDashboard({ onBack }) {
             onClick={() => navigate('reports')}
           >
             <ClipboardList size={19} />
-            <span>Environmental reports</span>
-
+            <span>{t.reports}</span>
             {count('pending') > 0 && (
-              <span className="admin-nav-count">
-                {count('pending')}
-              </span>
+              <span className="admin-nav-count">{count('pending')}</span>
             )}
           </button>
         </nav>
@@ -460,79 +691,65 @@ export default function AdminDashboard({ onBack }) {
             <div className="admin-sidebar-info-icon">
               <Leaf size={20} />
             </div>
-
-            <strong>Protecting our environment</strong>
-
-            <p>
-              Every verified report contributes to a cleaner
-              and safer community.
-            </p>
+            <strong>{t.protect}</strong>
+            <p>{t.protectText}</p>
           </div>
 
           <div className="admin-sidebar-account">
             <div className="admin-avatar">
               <ShieldCheck size={18} />
             </div>
-
             <div>
-              <strong>{profile.role}</strong>
-              <span>Authorized account</span>
+              <strong>{roleLabel(profile.role)}</strong>
+              <span>{t.authorized}</span>
             </div>
-
-            <button
-              onClick={logout}
-              title="Sign out"
-              aria-label="Sign out"
-            >
+            <button onClick={logout} title={t.signOut} aria-label={t.signOut}>
               <LogOut size={18} />
             </button>
           </div>
         </div>
       </aside>
 
-      {/* MAIN CONTENT */}
-
       <div className="admin-content">
-
         <header className="admin-topbar">
           <div className="admin-topbar-left">
             <button
               className="admin-menu-button"
               onClick={() => setSidebarOpen(true)}
-              aria-label="Open menu"
+              aria-label={isArabic ? 'فتح القائمة' : 'Open menu'}
             >
               <Menu size={21} />
             </button>
 
             <div className="admin-breadcrumb">
-              <span>Workspace</span>
+              <span>{t.workspace}</span>
               <ChevronRight size={14} />
               <strong>
-                {activeSection === 'overview'
-                  ? 'Overview'
-                  : 'Environmental reports'}
+                {activeSection === 'overview' ? t.overview : t.reports}
               </strong>
             </div>
           </div>
 
           <div className="admin-topbar-right">
+            <BackButton />
+            <LanguageButton />
+
             <div className="admin-secure-indicator">
               <span />
-              System active
+              {t.system}
             </div>
 
             <div className="admin-user-badge">
               <div className="admin-avatar">
                 <ShieldCheck size={17} />
               </div>
-
-              <span>{profile.role}</span>
+              <span>{roleLabel(profile.role)}</span>
             </div>
 
             <button
               className="admin-topbar-logout"
               onClick={logout}
-              title="Sign out"
+              title={t.signOut}
             >
               <LogOut size={18} />
             </button>
@@ -540,35 +757,18 @@ export default function AdminDashboard({ onBack }) {
         </header>
 
         <main className="admin-main">
-
-          {/* OVERVIEW */}
-
           {activeSection === 'overview' && (
             <>
               <section className="admin-page-heading">
                 <div>
-                  <span className="admin-eyebrow">
-                    ENVIRONMENTAL INTELLIGENCE
-                  </span>
-
-                  <h1>Dashboard overview</h1>
-
-                  <p>
-                    Monitor community reports and track environmental
-                    activity across the platform.
-                  </p>
+                  <span className="admin-eyebrow">{t.intelligence}</span>
+                  <h1>{t.dashboard}</h1>
+                  <p>{t.dashboardText}</p>
                 </div>
 
-                <button
-                  className="admin-refresh"
-                  onClick={loadReports}
-                  disabled={loading}
-                >
-                  <RefreshCw
-                    size={17}
-                    className={loading ? 'admin-spin' : ''}
-                  />
-                  Refresh data
+                <button className="admin-refresh" onClick={loadReports} disabled={loading}>
+                  <RefreshCw size={17} className={loading ? 'admin-spin' : ''} />
+                  {t.refresh}
                 </button>
               </section>
 
@@ -580,173 +780,96 @@ export default function AdminDashboard({ onBack }) {
               )}
 
               <section className="admin-stat-grid">
-
                 <div className="admin-stat-card">
                   <div className="admin-stat-top">
-                    <span>Total reports</span>
-                    <div className="admin-stat-icon green">
-                      <FileText size={20} />
-                    </div>
+                    <span>{t.total}</span>
+                    <div className="admin-stat-icon green"><FileText size={20} /></div>
                   </div>
-
                   <strong>{reports.length}</strong>
-
-                  <span className="admin-stat-caption">
-                    All community submissions
-                  </span>
+                  <span className="admin-stat-caption">{t.totalCaption}</span>
                 </div>
 
                 <div className="admin-stat-card">
                   <div className="admin-stat-top">
-                    <span>Pending review</span>
-                    <div className="admin-stat-icon amber">
-                      <Clock size={20} />
-                    </div>
+                    <span>{t.pendingReview}</span>
+                    <div className="admin-stat-icon amber"><Clock size={20} /></div>
                   </div>
-
                   <strong>{count('pending')}</strong>
-
-                  <span className="admin-stat-caption">
-                    Awaiting moderator review
-                  </span>
+                  <span className="admin-stat-caption">{t.pendingCaption}</span>
                 </div>
 
                 <div className="admin-stat-card">
                   <div className="admin-stat-top">
-                    <span>Verified</span>
-                    <div className="admin-stat-icon blue">
-                      <ShieldCheck size={20} />
-                    </div>
+                    <span>{t.verified}</span>
+                    <div className="admin-stat-icon blue"><ShieldCheck size={20} /></div>
                   </div>
-
                   <strong>{count('verified')}</strong>
-
-                  <span className="admin-stat-caption">
-                    Confirmed environmental reports
-                  </span>
+                  <span className="admin-stat-caption">{t.verifiedCaption}</span>
                 </div>
 
                 <div className="admin-stat-card">
                   <div className="admin-stat-top">
-                    <span>Resolved</span>
-                    <div className="admin-stat-icon teal">
-                      <CheckCircle2 size={20} />
-                    </div>
+                    <span>{t.resolved}</span>
+                    <div className="admin-stat-icon teal"><CheckCircle2 size={20} /></div>
                   </div>
-
                   <strong>{count('resolved')}</strong>
-
-                  <span className="admin-stat-caption">
-                    Successfully resolved reports
-                  </span>
+                  <span className="admin-stat-caption">{t.resolvedCaption}</span>
                 </div>
-
               </section>
 
               <section className="admin-secondary-stats">
                 <div>
-                  <div className="admin-secondary-stat-icon">
-                    <Activity size={19} />
-                  </div>
-
-                  <div>
-                    <span>Reports submitted today</span>
-                    <strong>{todayReports}</strong>
-                  </div>
+                  <div className="admin-secondary-stat-icon"><Activity size={19} /></div>
+                  <div><span>{t.today}</span><strong>{todayReports}</strong></div>
                 </div>
-
                 <div>
-                  <div className="admin-secondary-stat-icon">
-                    <ClipboardList size={19} />
-                  </div>
-
-                  <div>
-                    <span>Under review</span>
-                    <strong>{count('under_review')}</strong>
-                  </div>
+                  <div className="admin-secondary-stat-icon"><ClipboardList size={19} /></div>
+                  <div><span>{t.underReview}</span><strong>{count('under_review')}</strong></div>
                 </div>
-
                 <div>
-                  <div className="admin-secondary-stat-icon">
-                    <AlertTriangle size={19} />
-                  </div>
-
-                  <div>
-                    <span>In progress</span>
-                    <strong>{count('in_progress')}</strong>
-                  </div>
+                  <div className="admin-secondary-stat-icon"><AlertTriangle size={19} /></div>
+                  <div><span>{t.inProgress}</span><strong>{count('in_progress')}</strong></div>
                 </div>
               </section>
 
               <section className="admin-overview-grid">
-
                 <div className="admin-panel admin-priority-panel">
                   <div className="admin-panel-heading">
                     <div>
-                      <span className="admin-eyebrow">
-                        ATTENTION REQUIRED
-                      </span>
-
-                      <h2>Reports requiring attention</h2>
-
-                      <p>
-                        Recent submissions awaiting review.
-                      </p>
+                      <span className="admin-eyebrow">{t.attention}</span>
+                      <h2>{t.attentionTitle}</h2>
+                      <p>{t.attentionText}</p>
                     </div>
-
-                    <button
-                      className="admin-text-button"
-                      onClick={() => navigate('reports')}
-                    >
-                      View all <ArrowUpRight size={16} />
+                    <button className="admin-text-button" onClick={() => navigate('reports')}>
+                      {t.viewAll} <ArrowUpRight size={16} />
                     </button>
                   </div>
 
                   {loading ? (
                     <div className="admin-empty">
                       <RefreshCw className="admin-spin" />
-                      Loading reports...
+                      {t.loadingReports}
                     </div>
                   ) : pendingReports.length === 0 ? (
                     <div className="admin-empty">
                       <CheckCircle2 size={30} />
-                      <h3>All caught up</h3>
-                      <p>
-                        There are no reports waiting for review.
-                      </p>
+                      <h3>{t.caughtUp}</h3>
+                      <p>{t.noPending}</p>
                     </div>
                   ) : (
                     <div className="admin-priority-list">
                       {pendingReports.map(report => (
-                        <div
-                          className="admin-priority-item"
-                          key={report.id}
-                        >
-                          <div className="admin-priority-icon">
-                            <FileText size={19} />
-                          </div>
-
+                        <div className="admin-priority-item" key={report.id}>
+                          <div className="admin-priority-icon"><FileText size={19} /></div>
                           <div className="admin-priority-info">
-                            <strong>{report.category}</strong>
-
-                            <span>
-                              {report.address || 'Location not provided'}
-                            </span>
-
-                            <small>
-                              {formatDate(report.created_at)}
-                            </small>
+                            <strong>{categoryLabel(report.category)}</strong>
+                            <span>{report.address || t.noLocation}</span>
+                            <small>{formatDate(report.created_at, language)}</small>
                           </div>
-
                           <span className={`admin-status ${report.status}`}>
-                            {statusLabels[report.status] || report.status}
+                            {statusLabel(report.status)}
                           </span>
-
-                          <button
-                            onClick={() => openReport(report)}
-                            aria-label="View report"
-                            title="View report"
-                          >
+                          <button onClick={() => openReport(report)} aria-label={t.viewReport} title={t.viewReport}>
                             <ChevronRight size={18} />
                           </button>
                         </div>
@@ -758,13 +881,9 @@ export default function AdminDashboard({ onBack }) {
                 <div className="admin-panel admin-status-panel">
                   <div className="admin-panel-heading">
                     <div>
-                      <span className="admin-eyebrow">
-                        REPORT BREAKDOWN
-                      </span>
-
-                      <h2>Status overview</h2>
-
-                      <p>Current report distribution.</p>
+                      <span className="admin-eyebrow">{t.breakdown}</span>
+                      <h2>{t.statusOverview}</h2>
+                      <p>{t.distribution}</p>
                     </div>
                   </div>
 
@@ -775,19 +894,14 @@ export default function AdminDashboard({ onBack }) {
                         : 0;
 
                       return (
-                        <div
-                          className="admin-breakdown-item"
-                          key={status}
-                        >
+                        <div className="admin-breakdown-item" key={status}>
                           <div className="admin-breakdown-heading">
                             <span>
                               <i className={`admin-dot ${status}`} />
-                              {statusLabels[status]}
+                              {statusLabel(status)}
                             </span>
-
                             <strong>{count(status)}</strong>
                           </div>
-
                           <div className="admin-progress-track">
                             <div
                               className={`admin-progress-fill ${status}`}
@@ -799,93 +913,69 @@ export default function AdminDashboard({ onBack }) {
                     })}
                   </div>
 
-                  <button
-                    className="admin-full-button"
-                    onClick={() => navigate('reports')}
-                  >
-                    Manage all reports
+                  <button className="admin-full-button" onClick={() => navigate('reports')}>
+                    {t.manage}
                     <ChevronRight size={17} />
                   </button>
                 </div>
-
               </section>
 
               <section className="admin-panel admin-recent-panel">
                 <div className="admin-panel-heading">
                   <div>
-                    <span className="admin-eyebrow">
-                      LATEST ACTIVITY
-                    </span>
-
-                    <h2>Recent submissions</h2>
-
-                    <p>
-                      The latest reports submitted by the community.
-                    </p>
+                    <span className="admin-eyebrow">{t.latest}</span>
+                    <h2>{t.recent}</h2>
+                    <p>{t.recentText}</p>
                   </div>
-
-                  <button
-                    className="admin-text-button"
-                    onClick={() => navigate('reports')}
-                  >
-                    All reports <ArrowUpRight size={16} />
+                  <button className="admin-text-button" onClick={() => navigate('reports')}>
+                    {t.allReports} <ArrowUpRight size={16} />
                   </button>
                 </div>
 
                 {loading ? (
-                  <div className="admin-empty">
-                    Loading submissions...
-                  </div>
+                  <div className="admin-empty">{t.loadingSubmissions}</div>
                 ) : recentReports.length === 0 ? (
                   <div className="admin-empty">
                     <FileText size={30} />
-                    <h3>No submissions yet</h3>
-                    <p>Community reports will appear here.</p>
+                    <h3>{t.noSubmissions}</h3>
+                    <p>{t.communityReports}</p>
                   </div>
                 ) : (
                   <div className="admin-table-wrapper">
                     <table className="admin-table">
                       <thead>
                         <tr>
-                          <th>Report</th>
-                          <th>Location</th>
-                          <th>Date submitted</th>
-                          <th>Status</th>
+                          <th>{t.report}</th>
+                          <th>{t.location}</th>
+                          <th>{t.dateSubmitted}</th>
+                          <th>{t.statusOverview}</th>
                           <th />
                         </tr>
                       </thead>
-
                       <tbody>
                         {recentReports.map(report => (
                           <tr key={report.id}>
                             <td>
-                              <strong>{report.category}</strong>
+                              <strong>{categoryLabel(report.category)}</strong>
                               <small>
-                                {report.description?.slice(0, 65) || 'No description'}
+                                {report.description?.slice(0, 65) || t.noDescription}
                                 {report.description?.length > 65 ? '...' : ''}
                               </small>
                             </td>
-
                             <td>
                               <span className="admin-table-location">
                                 <MapPin size={14} />
-                                {report.address || 'Not provided'}
+                                {report.address || t.notProvided}
                               </span>
                             </td>
-
-                            <td>{formatDate(report.created_at)}</td>
-
+                            <td>{formatDate(report.created_at, language)}</td>
                             <td>
                               <span className={`admin-status ${report.status}`}>
-                                {statusLabels[report.status] || report.status}
+                                {statusLabel(report.status)}
                               </span>
                             </td>
-
                             <td>
-                              <button
-                                className="admin-view-button"
-                                onClick={() => openReport(report)}
-                              >
+                              <button className="admin-view-button" onClick={() => openReport(report)}>
                                 <Eye size={16} />
                               </button>
                             </td>
@@ -899,84 +989,45 @@ export default function AdminDashboard({ onBack }) {
             </>
           )}
 
-          {/* REPORT MANAGEMENT */}
-
           {activeSection === 'reports' && (
             <>
               <section className="admin-page-heading">
                 <div>
-                  <span className="admin-eyebrow">
-                    COMMUNITY MANAGEMENT
-                  </span>
-
-                  <h1>Environmental reports</h1>
-
-                  <p>
-                    Review submissions, verify environmental issues
-                    and update report progress.
-                  </p>
+                  <span className="admin-eyebrow">{t.communityManagement}</span>
+                  <h1>{t.reportTitle}</h1>
+                  <p>{t.reportDescription}</p>
                 </div>
-
-                <button
-                  className="admin-refresh"
-                  onClick={loadReports}
-                  disabled={loading}
-                >
-                  <RefreshCw
-                    size={17}
-                    className={loading ? 'admin-spin' : ''}
-                  />
-                  Refresh
+                <button className="admin-refresh" onClick={loadReports} disabled={loading}>
+                  <RefreshCw size={17} className={loading ? 'admin-spin' : ''} />
+                  {t.refreshShort}
                 </button>
               </section>
 
               <section className="admin-report-summary">
-                <div>
-                  <strong>{reports.length}</strong>
-                  <span>Total submissions</span>
-                </div>
-
-                <div>
-                  <strong>{count('pending')}</strong>
-                  <span>Pending</span>
-                </div>
-
-                <div>
-                  <strong>{count('in_progress')}</strong>
-                  <span>In progress</span>
-                </div>
-
-                <div>
-                  <strong>{count('resolved')}</strong>
-                  <span>Resolved</span>
-                </div>
+                <div><strong>{reports.length}</strong><span>{t.submissions}</span></div>
+                <div><strong>{count('pending')}</strong><span>{t.pending}</span></div>
+                <div><strong>{count('in_progress')}</strong><span>{t.inProgress}</span></div>
+                <div><strong>{count('resolved')}</strong><span>{t.resolved}</span></div>
               </section>
 
               <section className="admin-panel admin-management-panel">
                 <div className="admin-panel-heading">
                   <div>
-                    <h2>All submissions</h2>
-                    <p>
-                      {filteredReports.length} reports found
-                    </p>
+                    <h2>{t.allSubmissions}</h2>
+                    <p>{filteredReports.length} {t.found}</p>
                   </div>
                 </div>
 
                 <div className="admin-filters">
                   <div className="admin-search">
                     <Search size={18} />
-
                     <input
                       value={search}
                       onChange={e => setSearch(e.target.value)}
-                      placeholder="Search reports, descriptions or locations..."
+                      placeholder={t.searchPlaceholder}
                     />
-
                     {search && (
-                      <button
-                        onClick={() => setSearch('')}
-                        aria-label="Clear search"
-                      >
+                      <button onClick={() => setSearch('')} aria-label={t.clearSearch}>
                         <X size={16} />
                       </button>
                     )}
@@ -984,34 +1035,20 @@ export default function AdminDashboard({ onBack }) {
 
                   <div className="admin-filter-select">
                     <Filter size={16} />
-
-                    <select
-                      value={filterStatus}
-                      onChange={e => setFilterStatus(e.target.value)}
-                    >
-                      <option value="all">All statuses</option>
-
+                    <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)}>
+                      <option value="all">{t.allStatuses}</option>
                       {statuses.map(status => (
-                        <option key={status} value={status}>
-                          {statusLabels[status]}
-                        </option>
+                        <option key={status} value={status}>{statusLabel(status)}</option>
                       ))}
                     </select>
                   </div>
 
                   <div className="admin-filter-select">
                     <ClipboardList size={16} />
-
-                    <select
-                      value={filterCategory}
-                      onChange={e => setFilterCategory(e.target.value)}
-                    >
-                      <option value="all">All categories</option>
-
+                    <select value={filterCategory} onChange={e => setFilterCategory(e.target.value)}>
+                      <option value="all">{t.allCategories}</option>
                       {categories.map(category => (
-                        <option key={category} value={category}>
-                          {category}
-                        </option>
+                        <option key={category} value={category}>{categoryLabel(category)}</option>
                       ))}
                     </select>
                   </div>
@@ -1027,63 +1064,46 @@ export default function AdminDashboard({ onBack }) {
                 {loading ? (
                   <div className="admin-empty">
                     <RefreshCw className="admin-spin" size={25} />
-                    <p>Loading environmental reports...</p>
+                    <p>{t.loadingEnvironmental}</p>
                   </div>
                 ) : filteredReports.length === 0 ? (
                   <div className="admin-empty">
                     <FileText size={34} />
-                    <h3>No reports found</h3>
-                    <p>
-                      Try changing your filters or search terms.
-                    </p>
+                    <h3>{t.noReports}</h3>
+                    <p>{t.changeFilters}</p>
                   </div>
                 ) : (
                   <div className="admin-report-grid">
                     {filteredReports.map(report => (
-                      <article
-                        className="admin-report-card"
-                        key={report.id}
-                      >
+                      <article className="admin-report-card" key={report.id}>
                         <div className="admin-report-card-top">
                           <span className={`admin-status ${report.status}`}>
-                            {statusLabels[report.status] || report.status}
+                            {statusLabel(report.status)}
                           </span>
-
                           <small>
                             <CalendarDays size={13} />
-                            {formatDate(report.created_at)}
+                            {formatDate(report.created_at, language)}
                           </small>
                         </div>
 
-                        <h3>{report.category}</h3>
-
+                        <h3>{categoryLabel(report.category)}</h3>
                         <p className="admin-report-description">
-                          {report.description || 'No description provided.'}
+                          {report.description || t.noDescription}
                         </p>
 
                         <div className="admin-report-location">
                           <MapPin size={15} />
-                          <span>
-                            {report.address || 'Location not provided'}
-                          </span>
+                          <span>{report.address || t.noLocation}</span>
                         </div>
 
                         <div className="admin-report-card-footer">
                           <span>
                             {report.photo_url ? (
-                              <>
-                                <Eye size={15} />
-                                Evidence attached
-                              </>
-                            ) : (
-                              'No evidence photo'
-                            )}
+                              <><Eye size={15} /> {t.evidence}</>
+                            ) : t.noEvidence}
                           </span>
-
-                          <button
-                            onClick={() => openReport(report)}
-                          >
-                            Review report
+                          <button onClick={() => openReport(report)}>
+                            {t.review}
                             <ChevronRight size={16} />
                           </button>
                         </div>
@@ -1096,136 +1116,88 @@ export default function AdminDashboard({ onBack }) {
           )}
 
           <footer className="admin-footer">
-            <span>
-              <ShieldCheck size={15} />
-              ECOGUARD Administration
-            </span>
-
-            <span>
-              Environmental monitoring and community protection
-            </span>
+            <span><ShieldCheck size={15} /> {t.footer}</span>
+            <span>{t.footerText}</span>
           </footer>
-
         </main>
       </div>
 
-      {/* REPORT DETAILS MODAL */}
-
       {selectedReport && (
-        <div
-          className="admin-modal-backdrop"
-          onClick={() => setSelectedReport(null)}
-        >
-          <div
-            className="admin-modal"
-            onClick={e => e.stopPropagation()}
-          >
+        <div className="admin-modal-backdrop" onClick={() => setSelectedReport(null)}>
+          <div className="admin-modal" onClick={e => e.stopPropagation()}>
             <div className="admin-modal-header">
               <div>
-                <span className="admin-eyebrow">
-                  REPORT REVIEW
-                </span>
-
-                <h2>{selectedReport.category}</h2>
-
+                <span className="admin-eyebrow">{t.reviewEyebrow}</span>
+                <h2>{categoryLabel(selectedReport.category)}</h2>
                 <span className="admin-modal-date">
-                  Submitted {formatDateTime(selectedReport.created_at)}
+                  {t.submitted} {formatDateTime(selectedReport.created_at, language)}
                 </span>
               </div>
-
-              <button
-                onClick={() => setSelectedReport(null)}
-                aria-label="Close report"
-              >
+              <button onClick={() => setSelectedReport(null)} aria-label={t.closeReport}>
                 <X size={22} />
               </button>
             </div>
 
             <div className="admin-modal-content">
-
               <div className="admin-modal-status-row">
                 <span className={`admin-status ${selectedReport.status}`}>
-                  {statusLabels[selectedReport.status] || selectedReport.status}
+                  {statusLabel(selectedReport.status)}
                 </span>
               </div>
 
               <div className="admin-detail-block">
-                <h3>Description</h3>
-                <p>
-                  {selectedReport.description || 'No description provided.'}
-                </p>
+                <h3>{t.description}</h3>
+                <p>{selectedReport.description || t.noDescription}</p>
               </div>
 
               <div className="admin-detail-block">
-                <h3>Location</h3>
-
+                <h3>{t.location}</h3>
                 <p>
                   <MapPin size={16} />
-                  {selectedReport.address || 'No address provided.'}
+                  {selectedReport.address || t.noAddress}
                 </p>
 
-                {selectedReport.lat != null &&
-                  selectedReport.long != null && (
-                    <a
-                      className="admin-map-link"
-                      href={`https://www.openstreetmap.org/?mlat=${selectedReport.lat}&mlon=${selectedReport.long}#map=16/${selectedReport.lat}/${selectedReport.long}`}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Open report location
-                      <ExternalLink size={15} />
-                    </a>
-                  )}
+                {selectedReport.lat != null && selectedReport.long != null && (
+                  <a
+                    className="admin-map-link"
+                    href={`https://www.openstreetmap.org/?mlat=${selectedReport.lat}&mlon=${selectedReport.long}#map=16/${selectedReport.lat}/${selectedReport.long}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {t.openLocation}
+                    <ExternalLink size={15} />
+                  </a>
+                )}
               </div>
 
               {selectedReport.photo_url && (
                 <div className="admin-detail-block">
-                  <h3>Evidence photograph</h3>
-
-                  <a
-                    href={selectedReport.photo_url}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
+                  <h3>{t.photograph}</h3>
+                  <a href={selectedReport.photo_url} target="_blank" rel="noreferrer">
                     <img
                       className="admin-evidence"
                       src={selectedReport.photo_url}
-                      alt="Environmental report evidence"
+                      alt={t.photograph}
                     />
                   </a>
                 </div>
               )}
 
               <div className="admin-detail-block">
-                <h3>Moderator notes</h3>
-
-                <p className="admin-note-description">
-                  Record findings, verification details or the reason
-                  for rejecting a submission.
-                </p>
-
+                <h3>{t.notes}</h3>
+                <p className="admin-note-description">{t.notesDescription}</p>
                 <textarea
-                  value={
-                    notes[selectedReport.id] ??
-                    selectedReport.moderator_note ??
-                    ''
-                  }
-                  onChange={e =>
-                    setNotes(previous => ({
-                      ...previous,
-                      [selectedReport.id]: e.target.value
-                    }))
-                  }
-                  placeholder="Write your moderation notes here..."
+                  value={notes[selectedReport.id] ?? selectedReport.moderator_note ?? ''}
+                  onChange={e => setNotes(previous => ({
+                    ...previous,
+                    [selectedReport.id]: e.target.value
+                  }))}
+                  placeholder={t.notesPlaceholder}
                 />
               </div>
 
               {actionMessage && (
-                <div className={
-                  actionError
-                    ? 'admin-error'
-                    : 'admin-action-message'
-                }>
+                <div className={actionError ? 'admin-error' : 'admin-action-message'}>
                   {actionError
                     ? <AlertTriangle size={17} />
                     : <CheckCircle2 size={17} />}
@@ -1234,27 +1206,18 @@ export default function AdminDashboard({ onBack }) {
               )}
 
               <div className="admin-detail-block">
-                <h3>Update report status</h3>
-
-                <p className="admin-note-description">
-                  Select the appropriate status for this report.
-                </p>
+                <h3>{t.updateStatus}</h3>
+                <p className="admin-note-description">{t.statusDescription}</p>
 
                 <div className="admin-status-buttons">
                   {statuses.map(status => (
                     <button
                       key={status}
-                      className={
-                        selectedReport.status === status
-                          ? 'active'
-                          : ''
-                      }
+                      className={selectedReport.status === status ? 'active' : ''}
                       disabled={updatingId === selectedReport.id}
-                      onClick={() =>
-                        updateReport(selectedReport, status)
-                      }
+                      onClick={() => updateReport(selectedReport, status)}
                     >
-                      {statusLabels[status]}
+                      {statusLabel(status)}
                     </button>
                   ))}
                 </div>
@@ -1263,23 +1226,14 @@ export default function AdminDashboard({ onBack }) {
               <button
                 className="admin-primary admin-save-note"
                 disabled={updatingId === selectedReport.id}
-                onClick={() =>
-                  updateReport(
-                    selectedReport,
-                    selectedReport.status
-                  )
-                }
+                onClick={() => updateReport(selectedReport, selectedReport.status)}
               >
-                {updatingId === selectedReport.id
-                  ? 'Saving changes...'
-                  : 'Save moderator notes'}
+                {updatingId === selectedReport.id ? t.saving : t.saveNotes}
               </button>
-
             </div>
           </div>
         </div>
       )}
-
     </div>
   );
 }

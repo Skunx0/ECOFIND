@@ -1,7 +1,9 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap');
+
 /* =========================================
    ECOGUARD ADMINISTRATION
-   Complete dashboard redesign
+   Typography + Dashboard Refinement
 ========================================= */
 
 .admin-dashboard,
@@ -23,8 +25,12 @@
 }
 
 .admin-dashboard button {
-  transition: background 0.2s ease, border-color 0.2s ease,
-    color 0.2s ease, transform 0.2s ease;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .admin-dashboard button:focus-visible,
@@ -105,7 +111,9 @@
 
 .admin-sidebar-brand strong {
   display: block;
-  font-size: 16px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 17px;
+  font-weight: 800;
   letter-spacing: 1.5px;
 }
 
@@ -113,7 +121,7 @@
   display: block;
   margin-top: 5px;
   color: #a7b9aa;
-  font-size: 8px;
+  font-size: 9px;
   letter-spacing: 1.2px;
   white-space: nowrap;
 }
@@ -121,7 +129,7 @@
 .admin-sidebar-label {
   margin: 32px 10px 13px;
   color: #8fa795;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 1.8px;
 }
@@ -134,16 +142,18 @@
 
 .admin-navigation button {
   width: 100%;
+  min-height: 45px;
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 13px 12px;
+  padding: 12px 14px;
   border: 1px solid transparent;
-  border-radius: 9px;
+  border-radius: 10px;
   background: transparent;
   color: #c4d0c6;
   text-align: left;
   font-size: 13px;
+  font-weight: 600;
   cursor: pointer;
 }
 
@@ -163,8 +173,8 @@
 }
 
 .admin-nav-count {
-  min-width: 22px;
-  height: 22px;
+  min-width: 23px;
+  height: 23px;
   display: grid;
   place-items: center;
   margin-left: auto;
@@ -172,8 +182,8 @@
   border-radius: 20px;
   background: #d7e9d5;
   color: #315d3c;
-  font-size: 10px;
-  font-weight: 700;
+  font-size: 11px;
+  font-weight: 800;
 }
 
 .admin-sidebar-bottom {
@@ -200,7 +210,7 @@
 
 .admin-sidebar-info strong {
   display: block;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .admin-sidebar-info p {
@@ -245,13 +255,13 @@
 }
 
 .admin-sidebar-account button {
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   display: grid;
   place-items: center;
   margin-left: auto;
   border: none;
-  border-radius: 8px;
+  border-radius: 9px;
   background: transparent;
   color: #c1cec2;
   cursor: pointer;
@@ -300,7 +310,7 @@
 
 .admin-breadcrumb strong {
   color: #344c39;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .admin-secure-indicator {
@@ -335,6 +345,7 @@
 .admin-user-badge > span {
   color: #526453;
   font-size: 12px;
+  font-weight: 600;
   text-transform: capitalize;
 }
 
@@ -348,11 +359,11 @@
 
 .admin-menu-button {
   display: none;
-  width: 37px;
-  height: 37px;
+  width: 39px;
+  height: 39px;
   place-items: center;
   border: 1px solid #e2e9df;
-  border-radius: 8px;
+  border-radius: 9px;
   background: white;
   color: #315d3c;
   cursor: pointer;
@@ -379,15 +390,15 @@
 
 .admin-eyebrow {
   color: #6b8c70;
-  font-size: 10px;
-  font-weight: 700;
+  font-size: 11px;
+  font-weight: 800;
   letter-spacing: 2px;
 }
 
 .admin-page-heading h1 {
   margin: 9px 0;
   color: #253b2d;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Playfair Display', 'Cairo', serif;
   font-size: clamp(29px, 3vw, 38px);
   font-weight: 600;
   letter-spacing: -0.7px;
@@ -398,7 +409,7 @@
   margin: 0;
   color: #849084;
   font-size: 13px;
-  line-height: 1.7;
+  line-height: 1.8;
 }
 
 .admin-refresh {
@@ -407,24 +418,27 @@
   justify-content: center;
   gap: 9px;
   flex-shrink: 0;
-  padding: 11px 15px;
+  padding: 12px 17px;
+  min-height: 43px;
   border: 1px solid #dce6d9;
-  border-radius: 8px;
+  border-radius: 9px;
   background: white;
-  color: #41634a;
-  font-size: 12px;
-  font-weight: 600;
+  color: #285b40;
+  font-size: 13px;
+  font-weight: 700;
   cursor: pointer;
 }
 
 .admin-refresh:hover {
   background: #edf4eb;
   border-color: #b8cbb6;
+  transform: translateY(-1px);
 }
 
 .admin-refresh:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+  transform: none;
 }
 
 /* =========================================
@@ -457,7 +471,7 @@
 .admin-stat-top > span {
   color: #788579;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .admin-stat-icon {
@@ -494,7 +508,7 @@
   margin-top: 19px;
   color: #293f30;
   font-size: 32px;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: -1px;
 }
 
@@ -502,7 +516,7 @@
   display: block;
   margin-top: 5px;
   color: #9aa399;
-  font-size: 10px;
+  font-size: 11px;
 }
 
 /* =========================================
@@ -548,6 +562,7 @@
   margin-top: 4px;
   color: #344c39;
   font-size: 19px;
+  font-weight: 800;
 }
 
 /* =========================================
@@ -581,32 +596,34 @@
 .admin-panel-heading h2 {
   margin: 7px 0;
   color: #2c4333;
-  font-size: 16px;
-  font-weight: 650;
+  font-size: 17px;
+  font-weight: 700;
 }
 
 .admin-panel-heading p {
   margin: 0;
   color: #8b978b;
-  font-size: 11px;
-  line-height: 1.6;
+  font-size: 12px;
+  line-height: 1.7;
 }
 
 .admin-text-button {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   flex-shrink: 0;
-  padding: 5px;
+  padding: 7px 9px;
   border: none;
+  border-radius: 7px;
   background: transparent;
   color: #52765a;
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 700;
   cursor: pointer;
 }
 
 .admin-text-button:hover {
+  background: #edf4eb;
   color: #24482f;
 }
 
@@ -656,7 +673,8 @@
   display: block;
   overflow: hidden;
   color: #344b39;
-  font-size: 12px;
+  font-size: 13px;
+  font-weight: 700;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -666,7 +684,7 @@
   overflow: hidden;
   margin-top: 4px;
   color: #879387;
-  font-size: 10px;
+  font-size: 11px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -675,17 +693,17 @@
   display: block;
   margin-top: 4px;
   color: #a1aaa0;
-  font-size: 9px;
+  font-size: 10px;
 }
 
 .admin-priority-item > button {
-  width: 29px;
-  height: 29px;
+  width: 34px;
+  height: 34px;
   flex-shrink: 0;
   display: grid;
   place-items: center;
   border: 1px solid #e6ebe4;
-  border-radius: 7px;
+  border-radius: 8px;
   background: white;
   color: #66816a;
   cursor: pointer;
@@ -693,6 +711,7 @@
 
 .admin-priority-item > button:hover {
   background: #edf4eb;
+  border-color: #c9d8c6;
 }
 
 /* =========================================
@@ -718,12 +737,13 @@
   align-items: center;
   gap: 8px;
   color: #6c796d;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .admin-breakdown-heading strong {
   color: #354c3a;
-  font-size: 12px;
+  font-size: 13px;
+  font-weight: 800;
 }
 
 .admin-dot {
@@ -796,22 +816,25 @@
 
 .admin-full-button {
   width: 100%;
+  min-height: 43px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-top: 24px;
-  padding: 12px 13px;
-  border: 1px solid #e2e9df;
-  border-radius: 8px;
+  padding: 12px 16px;
+  border: 1px solid #dce7df;
+  border-radius: 9px;
   background: #f8faf6;
-  color: #45664b;
-  font-size: 11px;
-  font-weight: 600;
+  color: #285b40;
+  font-size: 13px;
+  font-weight: 700;
   cursor: pointer;
 }
 
 .admin-full-button:hover {
   background: #edf4eb;
+  border-color: #b9cdbf;
+  transform: translateY(-1px);
 }
 
 /* =========================================
@@ -834,21 +857,21 @@
 }
 
 .admin-table th {
-  padding: 12px 13px;
+  padding: 13px;
   border-bottom: 1px solid #e9eee7;
   color: #9aa49a;
-  font-size: 9px;
-  font-weight: 700;
+  font-size: 10px;
+  font-weight: 800;
   letter-spacing: 0.7px;
   text-transform: uppercase;
   white-space: nowrap;
 }
 
 .admin-table td {
-  padding: 15px 13px;
+  padding: 16px 13px;
   border-bottom: 1px solid #eef1ec;
   color: #748075;
-  font-size: 11px;
+  font-size: 12px;
   white-space: nowrap;
 }
 
@@ -859,7 +882,8 @@
 .admin-table td strong {
   display: block;
   color: #354c39;
-  font-size: 11px;
+  font-size: 12px;
+  font-weight: 700;
 }
 
 .admin-table td small {
@@ -868,7 +892,7 @@
   overflow: hidden;
   margin-top: 5px;
   color: #9ba59a;
-  font-size: 9px;
+  font-size: 10px;
   text-overflow: ellipsis;
 }
 
@@ -884,12 +908,12 @@
 }
 
 .admin-view-button {
-  width: 31px;
-  height: 31px;
+  width: 35px;
+  height: 35px;
   display: grid;
   place-items: center;
   border: 1px solid #e5ebe3;
-  border-radius: 7px;
+  border-radius: 8px;
   background: white;
   color: #58745d;
   cursor: pointer;
@@ -897,6 +921,7 @@
 
 .admin-view-button:hover {
   background: #edf4eb;
+  border-color: #c9d8c6;
 }
 
 /* =========================================
@@ -907,12 +932,12 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 6px 9px;
+  padding: 6px 10px;
   border-radius: 20px;
   background: #edf0ed;
   color: #657165;
-  font-size: 9px;
-  font-weight: 700;
+  font-size: 10px;
+  font-weight: 800;
   white-space: nowrap;
 }
 
@@ -967,14 +992,15 @@
 .admin-report-summary strong {
   display: block;
   color: #304a37;
-  font-size: 24px;
+  font-size: 25px;
+  font-weight: 800;
 }
 
 .admin-report-summary span {
   display: block;
   margin-top: 5px;
   color: #879387;
-  font-size: 10px;
+  font-size: 11px;
 }
 
 .admin-management-panel {
@@ -991,12 +1017,13 @@
 .admin-search,
 .admin-filter-select {
   min-width: 0;
+  min-height: 44px;
   display: flex;
   align-items: center;
   gap: 9px;
-  padding: 0 12px;
+  padding: 0 13px;
   border: 1px solid #e1e8de;
-  border-radius: 8px;
+  border-radius: 9px;
   background: #fbfcfa;
   color: #89978a;
 }
@@ -1015,7 +1042,7 @@
   background: transparent;
   color: #344b39;
   font: inherit;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .admin-search input::placeholder {
@@ -1040,7 +1067,7 @@
   background: transparent;
   color: #607061;
   font: inherit;
-  font-size: 11px;
+  font-size: 12px;
   cursor: pointer;
 }
 
@@ -1080,13 +1107,14 @@
   align-items: center;
   gap: 5px;
   color: #99a399;
-  font-size: 10px;
+  font-size: 11px;
 }
 
 .admin-report-card h3 {
   margin: 17px 0 8px;
   color: #304736;
-  font-size: 15px;
+  font-size: 16px;
+  font-weight: 700;
 }
 
 .admin-report-description {
@@ -1095,8 +1123,8 @@
   overflow: hidden;
   margin: 0;
   color: #788578;
-  font-size: 11px;
-  line-height: 1.7;
+  font-size: 12px;
+  line-height: 1.8;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
 }
@@ -1107,8 +1135,8 @@
   gap: 7px;
   margin-top: 15px;
   color: #728c74;
-  font-size: 10px;
-  line-height: 1.5;
+  font-size: 11px;
+  line-height: 1.6;
 }
 
 .admin-report-location svg {
@@ -1130,25 +1158,28 @@
   align-items: center;
   gap: 6px;
   color: #9aa49a;
-  font-size: 9px;
+  font-size: 10px;
 }
 
 .admin-report-card-footer button {
+  min-height: 40px;
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 8px 10px;
-  border: 1px solid #dce7d9;
-  border-radius: 7px;
+  gap: 7px;
+  padding: 10px 14px;
+  border: 1px solid #dce7df;
+  border-radius: 9px;
   background: #f7faf5;
-  color: #456b4c;
-  font-size: 10px;
-  font-weight: 600;
+  color: #285b40;
+  font-size: 12px;
+  font-weight: 700;
   cursor: pointer;
 }
 
 .admin-report-card-footer button:hover {
   background: #eaf2e8;
+  border-color: #b9cdbf;
+  transform: translateY(-1px);
 }
 
 /* =========================================
@@ -1172,14 +1203,14 @@
 .admin-empty h3 {
   margin: 13px 0 6px;
   color: #354c39;
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .admin-empty p {
   margin: 0;
   color: #8b978b;
-  font-size: 11px;
-  line-height: 1.6;
+  font-size: 12px;
+  line-height: 1.7;
 }
 
 .admin-error {
@@ -1210,7 +1241,7 @@
   gap: 15px;
   padding: 22px 2px 8px;
   color: #9aa49a;
-  font-size: 10px;
+  font-size: 11px;
 }
 
 .admin-footer span:first-child {
@@ -1263,22 +1294,23 @@
 .admin-modal-header h2 {
   margin: 8px 0 5px;
   color: #304636;
-  font-size: 20px;
+  font-size: 21px;
+  font-weight: 700;
 }
 
 .admin-modal-date {
   color: #99a399;
-  font-size: 10px;
+  font-size: 11px;
 }
 
 .admin-modal-header > button {
-  width: 34px;
-  height: 34px;
+  width: 37px;
+  height: 37px;
   display: grid;
   place-items: center;
   flex-shrink: 0;
   border: 1px solid #e8ece6;
-  border-radius: 8px;
+  border-radius: 9px;
   background: white;
   color: #718072;
   cursor: pointer;
@@ -1303,7 +1335,8 @@
 .admin-detail-block h3 {
   margin: 0 0 10px;
   color: #344c39;
-  font-size: 13px;
+  font-size: 14px;
+  font-weight: 700;
 }
 
 .admin-detail-block > p {
@@ -1312,7 +1345,7 @@
   gap: 8px;
   margin: 0;
   color: #738073;
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.8;
   overflow-wrap: anywhere;
 }
@@ -1329,8 +1362,8 @@
   gap: 7px;
   margin-top: 11px;
   color: #4e7956;
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 700;
   text-decoration: none;
 }
 
@@ -1351,7 +1384,7 @@
 .admin-note-description {
   margin-bottom: 12px !important;
   color: #8b978b !important;
-  font-size: 10px !important;
+  font-size: 11px !important;
 }
 
 .admin-modal-content textarea {
@@ -1360,12 +1393,12 @@
   padding: 13px;
   resize: vertical;
   border: 1px solid #dce5da;
-  border-radius: 8px;
+  border-radius: 9px;
   outline: none;
   background: #fbfcfa;
   color: #344b39;
   font: inherit;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .admin-modal-content textarea:focus {
@@ -1383,17 +1416,18 @@
 .admin-status-buttons {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 9px;
 }
 
 .admin-status-buttons button {
-  padding: 9px 12px;
+  min-height: 39px;
+  padding: 9px 14px;
   border: 1px solid #e0e7de;
-  border-radius: 7px;
+  border-radius: 8px;
   background: white;
   color: #617162;
-  font-size: 10px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 700;
   cursor: pointer;
 }
 
@@ -1414,29 +1448,35 @@
 }
 
 .admin-primary {
+  width: 100%;
+  min-height: 46px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 9px;
-  width: 100%;
-  padding: 13px 16px;
-  border: none;
-  border-radius: 8px;
-  background: #315d3c;
+  padding: 13px 18px;
+  border: 1px solid #285b40;
+  border-radius: 9px;
+  background: #285b40;
   color: white;
   font: inherit;
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 700;
   cursor: pointer;
 }
 
 .admin-primary:hover {
-  background: #264c31;
+  background: #1f4933;
+  border-color: #1f4933;
+  box-shadow: 0 4px 12px rgba(40, 91, 64, 0.15);
+  transform: translateY(-1px);
 }
 
 .admin-primary:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 .admin-save-note {
@@ -1452,7 +1492,7 @@
   border-radius: 8px;
   background: #eaf4e9;
   color: #397148;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 /* =========================================
@@ -1484,7 +1524,8 @@
   gap: 11px;
   margin-bottom: 35px;
   color: #315d3c;
-  font-size: 15px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 16px;
   font-weight: 800;
   letter-spacing: 1.5px;
 }
@@ -1492,7 +1533,7 @@
 .admin-login-card h1 {
   margin: 10px 0;
   color: #293f30;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Playfair Display', 'Cairo', serif;
   font-size: 35px;
   font-weight: 600;
 }
@@ -1500,7 +1541,7 @@
 .admin-login-card > p {
   margin: 0;
   color: #859085;
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.8;
 }
 
@@ -1516,20 +1557,21 @@
   flex-direction: column;
   gap: 8px;
   color: #4b604e;
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 700;
 }
 
 .admin-login-card input {
   width: 100%;
+  min-height: 45px;
   padding: 13px;
   border: 1px solid #dce5da;
-  border-radius: 8px;
+  border-radius: 9px;
   outline: none;
   background: #fbfcfa;
   color: #344b39;
   font: inherit;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .admin-login-card input:focus {
@@ -1548,7 +1590,7 @@
   padding-top: 17px;
   border-top: 1px solid #edf0eb;
   color: #8a968a;
-  font-size: 10px;
+  font-size: 11px;
 }
 
 /* =========================================
@@ -1627,8 +1669,8 @@
   .admin-topbar-logout {
     display: grid;
     place-items: center;
-    width: 34px;
-    height: 34px;
+    width: 36px;
+    height: 36px;
   }
 
   .admin-topbar {
@@ -1700,11 +1742,11 @@
   }
 
   .admin-page-heading p {
-    font-size: 11px;
+    font-size: 12px;
   }
 
   .admin-refresh {
-    padding: 10px 12px;
+    padding: 11px 14px;
   }
 
   .admin-stat-grid {
@@ -1716,7 +1758,7 @@
   }
 
   .admin-stat-top > span {
-    font-size: 10px;
+    font-size: 11px;
   }
 
   .admin-stat-icon {
@@ -1734,7 +1776,7 @@
   }
 
   .admin-stat-caption {
-    font-size: 9px;
+    font-size: 10px;
     line-height: 1.5;
   }
 
@@ -1752,7 +1794,7 @@
   }
 
   .admin-panel-heading h2 {
-    font-size: 14px;
+    font-size: 15px;
   }
 
   .admin-priority-item {
@@ -1765,16 +1807,16 @@
   }
 
   .admin-priority-info strong {
-    font-size: 10px;
+    font-size: 11px;
   }
 
   .admin-priority-info span {
-    font-size: 9px;
+    font-size: 10px;
   }
 
   .admin-priority-item .admin-status {
     padding: 5px 7px;
-    font-size: 8px;
+    font-size: 9px;
   }
 
   .admin-report-summary {
@@ -1800,7 +1842,7 @@
   }
 
   .admin-filter-select select {
-    font-size: 11px;
+    font-size: 12px;
   }
 
   .admin-report-card {
@@ -1812,11 +1854,11 @@
   }
 
   .admin-report-card-top small {
-    font-size: 9px;
+    font-size: 10px;
   }
 
   .admin-report-card h3 {
-    font-size: 14px;
+    font-size: 15px;
   }
 
   .admin-report-card-footer {
@@ -1826,7 +1868,7 @@
   .admin-footer {
     flex-direction: column;
     align-items: flex-start;
-    font-size: 9px;
+    font-size: 10px;
   }
 
   .admin-modal-backdrop {
@@ -1843,7 +1885,7 @@
   }
 
   .admin-modal-header h2 {
-    font-size: 17px;
+    font-size: 18px;
   }
 
   .admin-modal-content {
@@ -1887,4 +1929,316 @@
   .admin-panel-heading h2 {
     font-size: 13px;
   }
+}
+
+/* =========================================
+   ARABIC / RTL SUPPORT
+========================================= */
+
+.admin-rtl {
+  direction: rtl;
+  text-align: right;
+  font-family: 'Cairo', sans-serif;
+}
+
+.admin-rtl button,
+.admin-rtl input,
+.admin-rtl select,
+.admin-rtl textarea {
+  font-family: 'Cairo', sans-serif;
+}
+
+.admin-rtl .admin-sidebar {
+  left: auto;
+  right: 0;
+}
+
+.admin-rtl .admin-content {
+  margin-left: 0;
+  margin-right: 260px;
+}
+
+.admin-rtl .admin-sidebar-brand,
+.admin-rtl .admin-navigation button,
+.admin-rtl .admin-sidebar-account,
+.admin-rtl .admin-sidebar-info,
+.admin-rtl .admin-priority-item,
+.admin-rtl .admin-table-location,
+.admin-rtl .admin-report-location,
+.admin-rtl .admin-detail-block > p {
+  text-align: right;
+}
+
+.admin-rtl .admin-navigation button {
+  flex-direction: row;
+}
+
+.admin-rtl .admin-nav-count {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.admin-rtl .admin-sidebar-account button {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.admin-rtl .admin-user-badge {
+  padding-left: 0;
+  padding-right: 17px;
+  border-left: none;
+  border-right: 1px solid #e7ebe5;
+}
+
+.admin-rtl .admin-breakdown-heading,
+.admin-rtl .admin-stat-top,
+.admin-rtl .admin-panel-heading,
+.admin-rtl .admin-page-heading,
+.admin-rtl .admin-report-card-top,
+.admin-rtl .admin-report-card-footer {
+  direction: rtl;
+}
+
+.admin-rtl .admin-search,
+.admin-rtl .admin-filter-select {
+  direction: rtl;
+}
+
+.admin-rtl .admin-search input,
+.admin-rtl .admin-filter-select select {
+  text-align: right;
+}
+
+.admin-rtl .admin-modal-header,
+.admin-rtl .admin-modal-content {
+  direction: rtl;
+  text-align: right;
+}
+
+.admin-rtl .admin-modal-header > button {
+  margin-right: auto;
+  margin-left: 0;
+}
+
+.admin-rtl .admin-detail-block > p {
+  flex-direction: row;
+}
+
+.admin-rtl .admin-footer {
+  direction: rtl;
+}
+
+.admin-rtl .admin-login-card {
+  text-align: right;
+}
+
+.admin-rtl .admin-login-card label {
+  text-align: right;
+}
+
+.admin-rtl .admin-login-card input {
+  direction: rtl;
+  text-align: right;
+}
+
+.admin-rtl .admin-login-card input[type="email"] {
+  direction: ltr;
+  text-align: left;
+}
+
+.admin-rtl .admin-login-footer {
+  direction: rtl;
+}
+
+.admin-rtl .admin-breadcrumb {
+  direction: rtl;
+}
+
+.admin-rtl .admin-status-buttons {
+  direction: rtl;
+}
+
+.admin-rtl .admin-map-link {
+  direction: rtl;
+}
+
+.admin-rtl .admin-report-card-footer button,
+.admin-rtl .admin-text-button,
+.admin-rtl .admin-full-button {
+  direction: rtl;
+}
+
+.admin-rtl .admin-page-heading h1,
+.admin-rtl .admin-panel-heading h2,
+.admin-rtl .admin-report-card h3,
+.admin-rtl .admin-detail-block h3 {
+  letter-spacing: 0;
+}
+
+/* =========================================
+   BACK AND LANGUAGE BUTTONS
+========================================= */
+
+.admin-back-button,
+.admin-language-button {
+  min-height: 39px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 13px;
+  border: 1px solid #dce6d9;
+  border-radius: 9px;
+  background: #fff;
+  color: #285b40;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.admin-back-button:hover,
+.admin-language-button:hover {
+  background: #edf4eb;
+  border-color: #b8cbb6;
+  transform: translateY(-1px);
+}
+
+.admin-back-button svg {
+  flex-shrink: 0;
+}
+
+.admin-login-actions {
+  position: absolute;
+  top: 22px;
+  left: 24px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.admin-login-page,
+.admin-loading {
+  position: relative;
+}
+
+.admin-login-page .admin-login-card {
+  margin-top: 35px;
+}
+
+.admin-loading .admin-login-actions {
+  position: absolute;
+}
+
+/* =========================================
+   RTL MOBILE SIDEBAR
+========================================= */
+
+@media (max-width: 800px) {
+  .admin-rtl .admin-sidebar {
+    left: auto;
+    right: 0;
+    transform: translateX(100%);
+  }
+
+  .admin-rtl .admin-sidebar.open {
+    transform: translateX(0);
+  }
+
+  .admin-rtl .admin-content {
+    width: 100%;
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 550px) {
+  .admin-topbar-right {
+    gap: 7px;
+  }
+
+  .admin-back-button,
+  .admin-language-button {
+    min-height: 35px;
+    padding: 7px 10px;
+    font-size: 11px;
+  }
+
+  .admin-back-button span {
+    display: none;
+  }
+
+  .admin-login-actions {
+    top: 12px;
+    left: 12px;
+    right: 12px;
+  }
+
+  .admin-login-page .admin-login-card {
+    margin-top: 40px;
+  }
+
+  .admin-rtl .admin-user-badge {
+    padding-right: 9px;
+  }
+}
+
+/* =========================================
+   FINAL BUTTON CONSISTENCY
+   Scoped to dashboard only
+========================================= */
+
+.admin-dashboard .admin-primary,
+.admin-dashboard .admin-refresh,
+.admin-dashboard .admin-full-button,
+.admin-dashboard .admin-report-card-footer button {
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1px;
+  border-radius: 9px;
+  min-height: 42px;
+  box-shadow: none;
+}
+
+.admin-dashboard .admin-primary {
+  background: #285b40;
+  color: #fff;
+  border: 1px solid #285b40;
+}
+
+.admin-dashboard .admin-primary:hover {
+  background: #1f4933;
+  border-color: #1f4933;
+}
+
+.admin-dashboard .admin-refresh,
+.admin-dashboard .admin-full-button,
+.admin-dashboard .admin-report-card-footer button {
+  background: #fff;
+  color: #285b40;
+  border: 1px solid #dce7df;
+}
+
+.admin-dashboard .admin-refresh:hover,
+.admin-dashboard .admin-full-button:hover,
+.admin-dashboard .admin-report-card-footer button:hover {
+  background: #f1f6f2;
+  border-color: #b9cdbf;
+}
+
+/* Arabic button typography */
+
+.admin-rtl .admin-primary,
+.admin-rtl .admin-refresh,
+.admin-rtl .admin-full-button,
+.admin-rtl .admin-report-card-footer button,
+.admin-rtl .admin-back-button,
+.admin-rtl .admin-language-button,
+.admin-rtl .admin-status-buttons button {
+  font-family: 'Cairo', sans-serif;
+  font-weight: 700;
 }
