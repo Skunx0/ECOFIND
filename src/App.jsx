@@ -1,4 +1,3 @@
-
 import { useEffect, useMemo, useState } from 'react';
 import { supabase } from './lib/supabase';
 import EcoReport from './EcoReport';
@@ -7,7 +6,7 @@ import AdminDashboard from './AdminDashboard';
 import {
   Recycle, Search, MapPin, Plus, CheckCircle2,
   Clock3, ShieldCheck, X, Navigation, Leaf,
-  ChevronRight, RefreshCw, AlertTriangle
+  ChevronRight, RefreshCw, AlertTriangle, Menu
 } from 'lucide-react';
 
 import {
@@ -135,6 +134,10 @@ const translations = {
     find: 'Find a location',
     how: 'How it works',
     verification: 'Verification',
+    report: 'Report an issue',
+    admin: 'Admin',
+    menu: 'Open menu',
+    closeMenu: 'Close menu',
     submit: 'Submit a location',
     tagline: 'WASTE INTELLIGENCE FOR ALGERIA',
     hero1: 'Give your waste',
@@ -192,6 +195,10 @@ const translations = {
     find: 'ابحث عن موقع',
     how: 'كيف يعمل',
     verification: 'التحقق',
+    report: 'الإبلاغ عن مشكلة',
+    admin: 'لوحة الإدارة',
+    menu: 'فتح القائمة',
+    closeMenu: 'إغلاق القائمة',
     submit: 'أضف موقعًا',
     tagline: 'حلول ذكية للنفايات في الجزائر',
     hero1: 'امنح نفاياتك',
@@ -277,6 +284,7 @@ function MapFocus({ point }) {
 export default function App() {
   const [language, setLanguage] = useState('en');
   const [currentPage, setCurrentPage] = useState('ecofind');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const t = translations[language];
   const isArabic = language === 'ar';
@@ -358,6 +366,7 @@ export default function App() {
     return (
       <EcoReport
         onBack={() => setCurrentPage('ecofind')}
+        language={language}
       />
     );
   }
@@ -415,34 +424,50 @@ export default function App() {
       lang={language}
     >
       <header>
-        <a className="brand">
+        <a className="brand" href="#top" onClick={() => setMobileMenuOpen(false)}>
           <span className="logo"><Recycle /></span>
           <span><b>ECOFIND</b><small>BY ECOGUARD</small></span>
         </a>
 
-        <nav>
-          <a href="#locations">{t.find}</a>
-          <a href="#how">{t.how}</a>
-          <a href="#trust">{t.verification}</a>
+        <button
+          type="button"
+          className="mobile-menu-toggle"
+          aria-label={mobileMenuOpen ? t.closeMenu : t.menu}
+          aria-expanded={mobileMenuOpen}
+          aria-controls="primary-navigation"
+          onClick={() => setMobileMenuOpen(open => !open)}
+        >
+          {mobileMenuOpen ? <X size={23} /> : <Menu size={23} />}
+        </button>
+
+        <nav
+          id="primary-navigation"
+          className={`mobile-nav ${mobileMenuOpen ? 'mobile-nav-open' : ''}`}
+        >
+          <a href="#locations" onClick={() => setMobileMenuOpen(false)}>{t.find}</a>
+          <a href="#how" onClick={() => setMobileMenuOpen(false)}>{t.how}</a>
+          <a href="#trust" onClick={() => setMobileMenuOpen(false)}>{t.verification}</a>
 
           <a
             href="#report"
             onClick={e => {
               e.preventDefault();
+              setMobileMenuOpen(false);
               setCurrentPage('ecoreport');
             }}
           >
-            Report an issue
+            {t.report}
           </a>
 
           <a
             href="#admin"
             onClick={e => {
               e.preventDefault();
+              setMobileMenuOpen(false);
               setCurrentPage('admin');
             }}
           >
-            Admin
+            {t.admin}
           </a>
         </nav>
 
@@ -457,6 +482,7 @@ export default function App() {
           <button className="outline" onClick={() => {
             setMessage('');
             setModal(true);
+            setMobileMenuOpen(false);
           }}>
             <Plus size={16}/> {t.submit}
           </button>

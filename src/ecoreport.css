@@ -1,8 +1,14 @@
 .eco-report {
   max-width: 850px;
+  width: 100%;
+  box-sizing: border-box;
   margin: 55px auto;
   padding: 30px;
   color: #24382c;
+}
+
+.eco-report * {
+  box-sizing: border-box;
 }
 
 .report-back {
@@ -19,6 +25,7 @@
 
 .report-heading {
   margin-bottom: 35px;
+  text-align: start;
 }
 
 .report-eyebrow {
@@ -40,6 +47,7 @@
 }
 
 .report-form {
+  width: 100%;
   background: #fff;
   border: 1px solid #e5e9e2;
   border-radius: 18px;
@@ -55,13 +63,14 @@
   gap: 9px;
   font-size: 14px;
   font-weight: 600;
+  text-align: start;
 }
 
 .report-form input,
 .report-form select,
 .report-form textarea {
   width: 100%;
-  box-sizing: border-box;
+  min-width: 0;
   padding: 13px;
   border: 1px solid #dce4da;
   border-radius: 9px;
@@ -87,6 +96,7 @@
   align-items: center;
   gap: 9px;
   width: fit-content;
+  max-width: 100%;
   padding: 11px 15px;
   border: 1px solid #dce4da;
   border-radius: 9px;
@@ -98,6 +108,7 @@
 .report-coordinates {
   color: #64866b;
   font-size: 12px;
+  overflow-wrap: anywhere;
 }
 
 .report-upload {
@@ -111,11 +122,14 @@
   color: #64866b;
   background: #f8faf6;
   cursor: pointer;
+  overflow: hidden;
 }
 
 .report-upload input {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
   opacity: 0;
   cursor: pointer;
 }
@@ -127,6 +141,7 @@
   color: #788477;
   font-size: 13px;
   line-height: 1.6;
+  text-align: start;
 }
 
 .report-submit {
@@ -134,6 +149,7 @@
   justify-content: center;
   align-items: center;
   gap: 10px;
+  width: 100%;
   padding: 15px;
   border: none;
   border-radius: 10px;
@@ -142,6 +158,11 @@
   font: inherit;
   font-weight: 600;
   cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.report-submit:hover:not(:disabled) {
+  background: #244a2e;
 }
 
 .report-submit:disabled {
@@ -175,6 +196,7 @@
 .report-success button {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   padding: 12px 18px;
   margin-top: 20px;
@@ -185,13 +207,81 @@
   cursor: pointer;
 }
 
+/* Arabic / RTL support */
+.eco-report[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
+
+.eco-report[dir="rtl"] .report-heading,
+.eco-report[dir="rtl"] .report-form label,
+.eco-report[dir="rtl"] .report-notice,
+.eco-report[dir="rtl"] .report-message {
+  text-align: right;
+}
+
+.eco-report[dir="rtl"] .report-eyebrow {
+  letter-spacing: 0;
+}
+
+.eco-report[dir="rtl"] .report-upload,
+.eco-report[dir="rtl"] .report-location,
+.eco-report[dir="rtl"] .report-notice,
+.eco-report[dir="rtl"] .report-message {
+  direction: rtl;
+}
+
+/* Mobile responsiveness */
 @media (max-width: 600px) {
   .eco-report {
-    padding: 18px;
-    margin: 25px auto;
+    padding: 16px;
+    margin: 20px auto;
+  }
+
+  .report-back {
+    margin-bottom: 24px;
+  }
+
+  .report-heading {
+    margin-bottom: 24px;
+  }
+
+  .report-heading h1 {
+    font-size: 32px;
   }
 
   .report-form {
-    padding: 20px;
+    padding: 18px;
+    gap: 18px;
+    border-radius: 14px;
+  }
+
+  .report-form input,
+  .report-form select,
+  .report-form textarea {
+    padding: 12px;
+    font-size: 16px;
+  }
+
+  .report-upload {
+    padding: 18px 14px;
+  }
+
+  .report-success {
+    padding: 45px 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .eco-report {
+    padding: 12px;
+  }
+
+  .report-form {
+    padding: 14px;
+  }
+
+  .report-heading h1 {
+    font-size: 28px;
   }
 }
