@@ -263,7 +263,7 @@ const marker = L.divIcon({
 function Status({ verified, t }) {
   return (
     <span className={`status ${verified ? 'verified' : 'community'}`}>
-      {verified ? <CheckCircle2 size={13}/> : <Clock3 size={13}/>}
+      {verified ? <CheckCircle2 size={13} /> : <Clock3 size={13} />}
       {verified ? t.verified : t.community}
     </span>
   );
@@ -361,7 +361,7 @@ export default function App() {
   const active =
     results.find(p => p.id === selected) || results[0];
 
-  // ECOREPORT page
+  // ECOREPORT PAGE
   if (currentPage === 'ecoreport') {
     return (
       <EcoReport
@@ -376,6 +376,8 @@ export default function App() {
     return (
       <AdminDashboard
         onBack={() => setCurrentPage('ecofind')}
+        language={language}
+        onLanguageChange={setLanguage}
       />
     );
   }
@@ -424,9 +426,16 @@ export default function App() {
       lang={language}
     >
       <header>
-        <a className="brand" href="#top" onClick={() => setMobileMenuOpen(false)}>
+        <a
+          className="brand"
+          href="#top"
+          onClick={() => setMobileMenuOpen(false)}
+        >
           <span className="logo"><Recycle /></span>
-          <span><b>ECOFIND</b><small>BY ECOGUARD</small></span>
+          <span>
+            <b>ECOFIND</b>
+            <small>BY ECOGUARD</small>
+          </span>
         </a>
 
         <button
@@ -444,9 +453,17 @@ export default function App() {
           id="primary-navigation"
           className={`mobile-nav ${mobileMenuOpen ? 'mobile-nav-open' : ''}`}
         >
-          <a href="#locations" onClick={() => setMobileMenuOpen(false)}>{t.find}</a>
-          <a href="#how" onClick={() => setMobileMenuOpen(false)}>{t.how}</a>
-          <a href="#trust" onClick={() => setMobileMenuOpen(false)}>{t.verification}</a>
+          <a href="#locations" onClick={() => setMobileMenuOpen(false)}>
+            {t.find}
+          </a>
+
+          <a href="#how" onClick={() => setMobileMenuOpen(false)}>
+            {t.how}
+          </a>
+
+          <a href="#trust" onClick={() => setMobileMenuOpen(false)}>
+            {t.verification}
+          </a>
 
           <a
             href="#report"
@@ -479,12 +496,15 @@ export default function App() {
             {isArabic ? 'English' : 'العربية'}
           </button>
 
-          <button className="outline" onClick={() => {
-            setMessage('');
-            setModal(true);
-            setMobileMenuOpen(false);
-          }}>
-            <Plus size={16}/> {t.submit}
+          <button
+            className="outline"
+            onClick={() => {
+              setMessage('');
+              setModal(true);
+              setMobileMenuOpen(false);
+            }}
+          >
+            <Plus size={16} /> {t.submit}
           </button>
         </div>
       </header>
@@ -492,18 +512,20 @@ export default function App() {
       <section className="hero">
         <div>
           <div className="eyebrow">
-            <Leaf size={15}/> {t.tagline}
+            <Leaf size={15} /> {t.tagline}
           </div>
 
           <h1>
-            {t.hero1}<br/>
+            {t.hero1}<br />
             <em>{t.hero2}</em>
           </h1>
 
           <p>{t.heroText}</p>
         </div>
 
-        <div className="hero-icon"><Recycle size={70}/></div>
+        <div className="hero-icon">
+          <Recycle size={70} />
+        </div>
       </section>
 
       <main>
@@ -515,7 +537,7 @@ export default function App() {
             <label>
               {t.search}
               <div className="input">
-                <Search size={17}/>
+                <Search size={17} />
                 <input
                   value={q}
                   onChange={e => setQ(e.target.value)}
@@ -526,7 +548,10 @@ export default function App() {
 
             <label>
               {t.material}
-              <select value={mat} onChange={e => setMat(e.target.value)}>
+              <select
+                value={mat}
+                onChange={e => setMat(e.target.value)}
+              >
                 {materials.map(x => (
                   <option key={x} value={x}>
                     {isArabic ? materialArabic[x] : x}
@@ -544,7 +569,9 @@ export default function App() {
                 {wilayas.map(x => (
                   <option key={x} value={x}>
                     {isArabic
-                      ? (x === 'All wilayas' ? t.allWilayas : (wilayaArabic[x] || x))
+                      ? (x === 'All wilayas'
+                        ? t.allWilayas
+                        : (wilayaArabic[x] || x))
                       : x}
                   </option>
                 ))}
@@ -553,13 +580,17 @@ export default function App() {
           </div>
 
           <div className="searchfoot">
-            <span><MapPin size={14}/> {t.live}</span>
+            <span>
+              <MapPin size={14} /> {t.live}
+            </span>
 
-            <button onClick={() => {
-              setQ('');
-              setMat('All materials');
-              setWilaya('All wilayas');
-            }}>
+            <button
+              onClick={() => {
+                setQ('');
+                setMat('All materials');
+                setWilaya('All wilayas');
+              }}
+            >
               {t.clear}
             </button>
           </div>
@@ -569,11 +600,13 @@ export default function App() {
           <div className="heading">
             <div>
               <div className="eyebrow dark">{t.directory}</div>
-              <h2>{t.locations} <small>{results.length}</small></h2>
+              <h2>
+                {t.locations} <small>{results.length}</small>
+              </h2>
             </div>
 
             <button className="refresh" onClick={loadPoints}>
-              <RefreshCw size={15}/> {t.refresh}
+              <RefreshCw size={15} /> {t.refresh}
             </button>
           </div>
 
@@ -581,7 +614,7 @@ export default function App() {
 
           {error && (
             <p className="error">
-              <AlertTriangle size={17}/> {error}
+              <AlertTriangle size={17} /> {error}
             </p>
           )}
 
@@ -598,71 +631,78 @@ export default function App() {
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                   />
 
-                  <MapFocus point={active}/>
+                  <MapFocus point={active} />
 
-                  {results.filter(p =>
-                    p.lat != null && p.long != null
-                  ).map(p => (
-                    <Marker
-                      key={p.id}
-                      position={[Number(p.lat), Number(p.long)]}
-                      icon={marker}
-                      eventHandlers={{
-                        click: () => setSelected(p.id)
-                      }}
-                    >
-                      <Popup>
-                        <b>{p.name}</b><br/>
-                        {p.address}
-                      </Popup>
-                    </Marker>
-                  ))}
+                  {results
+                    .filter(p => p.lat != null && p.long != null)
+                    .map(p => (
+                      <Marker
+                        key={p.id}
+                        position={[Number(p.lat), Number(p.long)]}
+                        icon={marker}
+                        eventHandlers={{
+                          click: () => setSelected(p.id)
+                        }}
+                      >
+                        <Popup>
+                          <b>{p.name}</b><br />
+                          {p.address}
+                        </Popup>
+                      </Marker>
+                    ))}
                 </MapContainer>
 
                 <span className="mapnote">
-                  <Navigation size={13}/> {t.mapNote}
+                  <Navigation size={13} /> {t.mapNote}
                 </span>
               </div>
 
               <aside className="list">
                 <b>{results.length} {t.matching}</b>
 
-                {results.length ? results.map(p => (
-                  <button
-                    className={`card ${active?.id === p.id ? 'selected' : ''}`}
-                    key={p.id}
-                    onClick={() => setSelected(p.id)}
-                  >
-                    <div className="cardtop">
-                      <small>{t.collection}</small>
-                      <Status verified={p.verified} t={t}/>
-                    </div>
+                {results.length ? (
+                  results.map(p => (
+                    <button
+                      className={`card ${active?.id === p.id ? 'selected' : ''}`}
+                      key={p.id}
+                      onClick={() => setSelected(p.id)}
+                    >
+                      <div className="cardtop">
+                        <small>{t.collection}</small>
+                        <Status verified={p.verified} t={t} />
+                      </div>
 
-                    <h3>{p.name}</h3>
+                      <h3>{p.name}</h3>
 
-                    <p><MapPin size={13}/> {p.address}</p>
+                      <p>
+                        <MapPin size={13} /> {p.address}
+                      </p>
 
-                    <div className="tags">
-                      {(p.accepted_materials || []).map(m => (
-                        <span key={m}>
-                          {isArabic ? (materialArabic[m] || m) : m}
-                        </span>
-                      ))}
-                    </div>
+                      <div className="tags">
+                        {(p.accepted_materials || []).map(m => (
+                          <span key={m}>
+                            {isArabic ? (materialArabic[m] || m) : m}
+                          </span>
+                        ))}
+                      </div>
 
-                    <div className="note">
-                      {t.select} <ChevronRight size={15}/>
-                    </div>
-                  </button>
-                )) : (
+                      <div className="note">
+                        {t.select} <ChevronRight size={15} />
+                      </div>
+                    </button>
+                  ))
+                ) : (
                   <p>{t.noResults}</p>
                 )}
 
-                <button className="submit" onClick={() => {
-                  setMessage('');
-                  setModal(true);
-                }}>
-                  <Plus size={16}/> {t.suggest}
+                <button
+                  className="submit"
+                  onClick={() => {
+                    setMessage('');
+                    setModal(true);
+                  }}
+                >
+                  <Plus size={16} /> {t.suggest}
                 </button>
               </aside>
             </section>
@@ -670,7 +710,7 @@ export default function App() {
         </section>
 
         <section className="trust" id="trust">
-          <ShieldCheck/>
+          <ShieldCheck />
           <div>
             <b>{t.trust}</b>
             <p>{t.trustText}</p>
@@ -715,22 +755,27 @@ export default function App() {
               </div>
 
               <button onClick={() => setModal(false)}>
-                <X/>
+                <X />
               </button>
             </div>
 
             {message ? (
               <div className="success">
-                <CheckCircle2 size={35}/>
+                <CheckCircle2 size={35} />
+
                 <h3>
                   {message === t.submitted ? t.thankYou : t.result}
                 </h3>
+
                 <p>{message}</p>
 
-                <button className="primary" onClick={() => {
-                  if (message === t.submitted) setModal(false);
-                  setMessage('');
-                }}>
+                <button
+                  className="primary"
+                  onClick={() => {
+                    if (message === t.submitted) setModal(false);
+                    setMessage('');
+                  }}
+                >
                   {t.close}
                 </button>
               </div>
@@ -741,7 +786,10 @@ export default function App() {
                   <input
                     required
                     value={form.name}
-                    onChange={e => setForm({...form, name: e.target.value})}
+                    onChange={e => setForm({
+                      ...form,
+                      name: e.target.value
+                    })}
                   />
                 </label>
 
@@ -750,7 +798,10 @@ export default function App() {
                   <input
                     required
                     value={form.address}
-                    onChange={e => setForm({...form, address: e.target.value})}
+                    onChange={e => setForm({
+                      ...form,
+                      address: e.target.value
+                    })}
                   />
                 </label>
 
@@ -758,7 +809,10 @@ export default function App() {
                   {t.accepted}
                   <select
                     value={form.material}
-                    onChange={e => setForm({...form, material: e.target.value})}
+                    onChange={e => setForm({
+                      ...form,
+                      material: e.target.value
+                    })}
                   >
                     {materials.slice(1).map(x => (
                       <option key={x} value={x}>
@@ -772,17 +826,20 @@ export default function App() {
                   {t.additional}
                   <textarea
                     value={form.notes}
-                    onChange={e => setForm({...form, notes: e.target.value})}
+                    onChange={e => setForm({
+                      ...form,
+                      notes: e.target.value
+                    })}
                   />
                 </label>
 
                 <p className="notice">
-                  <ShieldCheck size={16}/> {t.notice}
+                  <ShieldCheck size={16} /> {t.notice}
                 </p>
 
                 <button className="primary" disabled={submitting}>
                   {submitting ? t.submitting : t.submitReview}
-                  <ChevronRight size={16}/>
+                  <ChevronRight size={16} />
                 </button>
               </form>
             )}
